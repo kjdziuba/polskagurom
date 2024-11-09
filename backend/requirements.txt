@@ -4,6 +4,7 @@ requests
 openai
 pandas
 numpy
-pytorch
+torch
 tensorflow
 PyJWT
+python-dotenv
