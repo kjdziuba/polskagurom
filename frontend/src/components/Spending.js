@@ -28,8 +28,13 @@ function Spending() {
     labels: spendingData.categories,
     datasets: [
       {
-        data: spendingData.values,
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+        data: spendingData.amounts,
+        backgroundColor: [
+          "#FF6384", // Rent
+          "#36A2EB", // Food
+          "#FFCE56", // Utilities
+          "#4BC0C0", // Entertainment
+        ],
       },
     ],
   };
