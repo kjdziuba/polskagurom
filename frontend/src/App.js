@@ -19,11 +19,10 @@ function App() {
     <Router>
       <NavigationBar />
       <div className="container">
-        <h1 className="text-center my-4">Timewise Finance</h1>
         <Routes>
-          <Route path="/" component={HomeWeb} />
-          <Route path="/networth" component={NetWorthWeb} />
-          <Route path="/spending" component={SpendingWeb} />
+          <Route path="/" element={<HomeWeb/>}/>
+          <Route path="/networth" element={<NetWorthWeb/>} />
+          <Route path="/spending" element={<SpendingWeb/>} />
           <Route path="/news" component={NewsWeb} />
           <Route path="/notifications" component={NotificationsWeb} />
           <Route path="/futureme" component={FutureMeWeb} />
