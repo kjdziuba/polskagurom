@@ -18,15 +18,15 @@ function Notifications() {
   }, []);
 
   return (
-    <div>
-      <h2>Notifications</h2>
-      <ul>
-        {notifications.length > 0 ? (
-          notifications.map((note, index) => <li key={index}>{note}</li>)
-        ) : (
-          <li>Loading...</li>
-        )}
-      </ul>
+    <div className="card mb-4">
+      <div className="card-body">
+        <h2 className="card-title">Notifications</h2>
+        <ul>
+          {notifications.map((note, index) => (
+            <li key={index}>{note}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

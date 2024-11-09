@@ -19,23 +19,25 @@ function FutureMe() {
   };
 
   return (
-    <div>
-      <h2>Future Me</h2>
-      <textarea
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Ask Future Me a question..."
-        rows="4"
-        cols="50"
-      />
-      <br />
-      <button onClick={handleSend}>Send</button>
-      {response && (
-        <div>
-          <h3>Future Me says:</h3>
-          <p>{response}</p>
-        </div>
-      )}
+    <div className="card mb-4">
+      <div className="card-body">
+        <h2 className="card-title">Future Me</h2>
+        <textarea
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Ask Future Me a question..."
+          rows="4"
+          cols="50"
+        />
+        <br />
+        <button onClick={handleSend}>Send</button>
+        {response && (
+          <div>
+            <h3>Future Me says:</h3>
+            <p>{response}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

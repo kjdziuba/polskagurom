@@ -11,23 +11,36 @@ import NotificationsWeb from "./pages/NotificationsWeb";
 import NetWorthWeb from "./pages/NetWorthWeb";
 import FutureMeWeb from "./pages/FutureMeWeb";
 import HomeWeb from "./pages/HomeWeb";
+import { useAuth0 } from "@auth0/auth0-react";
 
 Chart.register(CategoryScale, LinearScale);
 
 function App() {
+  const { isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Router>
       <NavigationBar />
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<HomeWeb/>}/>
-          <Route path="/networth" element={<NetWorthWeb/>} />
-          <Route path="/spending" element={<SpendingWeb/>} />
-          <Route path="/news" element={<NewsWeb/>} />
-          <Route path="/notifications" element={<NotificationsWeb/>} />
-          <Route path="/futureme" element={<FutureMeWeb/>} />
-        </Routes>
-      </div>
+      {!isAuthenticated ? (
+        <div className="container text-center">
+          <h2>Please log in to access the dashboard.</h2>
+        </div>
+      ) : (
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<HomeWeb />} />
+            <Route path="/networth" element={<NetWorthWeb />} />
+            <Route path="/spending" element={<SpendingWeb />} />
+            <Route path="/news" element={<NewsWeb />} />
+            <Route path="/notifications" element={<NotificationsWeb />} />
+            <Route path="/futureme" element={<FutureMeWeb />} />
+          </Routes>
+        </div>
+      )}
     </Router>
   );
 }

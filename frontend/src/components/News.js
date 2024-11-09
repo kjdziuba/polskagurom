@@ -18,9 +18,11 @@ function News() {
   }, []);
 
   return (
-    <div>
-      <h2>Financial News Summary</h2>
-      <p>{newsSummary || "Loading..."}</p>
+    <div className="card mb-4">
+      <div className="card-body">
+        <h2 className="card-title">Financial News Summary</h2>
+        <p>{newsSummary}</p>
+      </div>
     </div>
   );
 }
