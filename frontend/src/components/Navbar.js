@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
+import AuthButton from "./AuthButton";
 
 function NavigationBar() {
   return (
@@ -15,6 +16,9 @@ function NavigationBar() {
           <Nav.Link href="#news">News</Nav.Link>
           <Nav.Link href="#notifications">Notifications</Nav.Link>
           <Nav.Link href="#futureme">Future Me</Nav.Link>
+        </Nav>
+        <Nav className="ml-auto">
+          <AuthButton />
         </Nav>
       </Navbar.Collapse>
     </Navbar>
