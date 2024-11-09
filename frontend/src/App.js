@@ -6,6 +6,7 @@ import NetWorth from "./components/NetWorth";
 import FutureMe from "./components/FutureMe";
 import Spending from "./components/Spending";
 import News from "./components/News";
+import Notifications from "./components/Notifications";
 
 Chart.register(CategoryScale, LinearScale);
 
@@ -17,6 +18,7 @@ function App() {
       <NetWorth />
       <FutureMe />
       <News />
+      <Notifications />
     </div>
   );
 }
