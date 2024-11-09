@@ -4,7 +4,6 @@ import React from "react";
 import { Chart, CategoryScale, LinearScale } from "chart.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavigationBar from "./components/Navbar";
-import "./styles/style.css";
 import SpendingWeb from "./pages/SpendingWeb";
 import NewsWeb from "./pages/NewsWeb";
 import NotificationsWeb from "./pages/NotificationsWeb";

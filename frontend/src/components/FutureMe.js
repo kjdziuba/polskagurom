@@ -5,13 +5,17 @@ import axios from "axios";
 
 function FutureMe() {
   const [message, setMessage] = useState("");
-  const [response, setResponse] = useState("");
+  const [conversation, setConversation] = useState([]);
 
   const handleSend = () => {
+    if (message.trim() === "") return;
+
     axios
-      .post("http://localhost:5000/api/future-me/", { message }) // Change to your backend API when DEPLOYING
+      .post("http://localhost:5000/api/future-me/", { message })
       .then((res) => {
-        setResponse(res.data.response);
+        const reply = res.data.response;
+        setConversation([...conversation, { user: message, bot: reply }]);
+        setMessage("");
       })
       .catch((error) => {
         console.error("Error communicating with Future Me:", error);
@@ -19,26 +23,30 @@ function FutureMe() {
   };
 
   return (
-    <div className="card mb-4">
-      <div className="card-body">
-        <h2 className="card-title">Future Me</h2>
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Ask Future Me a question..."
-          rows="4"
-          cols="50"
-        />
-        <br />
-        <button onClick={handleSend}>Send</button>
-        {response && (
-          <div>
-            <h3>Future Me says:</h3>
-            <p>{response}</p>
+    <>
+      <div className="chat-container">
+        {conversation.map((chat, index) => (
+          <div key={index} className="chat-message">
+            <p>
+              <strong>You:</strong> {chat.user}
+            </p>
+            <p>
+              <strong>Future Me:</strong> {chat.bot}
+            </p>
           </div>
-        )}
+        ))}
       </div>
-    </div>
+      <textarea
+        className="form-control"
+        rows="3"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Ask Future Me a question..."
+      ></textarea>
+      <button className="btn btn-primary mt-2" onClick={handleSend}>
+        Send
+      </button>
+    </>
   );
 }
 
