@@ -9,3 +9,4 @@ tensorflow
 PyJWT
 python-dotenv
 yfinance
+nltk
