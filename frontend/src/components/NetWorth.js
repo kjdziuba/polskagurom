@@ -64,9 +64,11 @@ function NetWorth() {
   };
 
   return (
-    <div>
-      <h2>Net Worth Over Time</h2>
-      <Line data={data} options={options} />
+    <div className="card mb-4">
+      <div className="card-body">
+        <h2 className="card-title">Net Worth Over Time</h2>
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 }

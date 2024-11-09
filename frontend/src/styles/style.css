@@ -1,0 +1,10 @@
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
