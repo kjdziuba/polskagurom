@@ -6,7 +6,7 @@ import yfinance as yf
 import csv
 import pandas as pd
 import json
-## Tickers: 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'FB', 'TSLA', 'NVDA', 'PYPL', 'ADBE', 'NFLX'
+## Tickers: 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'PYPL', 'ADBE', 'NFLX'
 
 ## Functions 
 
@@ -23,6 +23,9 @@ def save_data(path, data):
     #df.to_csv(path+".csv", index=False)
     df.to_json(path, orient='records')
 
+def load_data_as_pd(path):
+    df = pd.read_json(path)
+    return df
 
 def create_folder(folder):
     import os
@@ -43,5 +46,5 @@ def live_stock_price(ticker):
 #d = get_historical_stock_price('AAPL', '2020-01-01', '2020-12-31')
 #save_data('AAPL.json', d)
 
-ST = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'FB', 'TSLA', 'NVDA', 'PYPL', 'ADBE', 'NFLX']
-multiple_stocks(ST, '2020-01-01', '2020-12-31')
+#ST = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'PYPL', 'ADBE', 'NFLX']
+#multiple_stocks(ST, '2020-01-01', '2020-12-31')
