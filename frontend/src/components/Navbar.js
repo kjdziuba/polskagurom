@@ -12,16 +12,14 @@ function NavigationBar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#networth">Net Worth</Nav.Link>
-          <Nav.Link as={Link} to="/spending">
-            Spending
-          </Nav.Link>
-          <Nav.Link href="#news">News</Nav.Link>
-          <Nav.Link href="#notifications">Notifications</Nav.Link>
-          <Nav.Link href="#futureme">Future Me</Nav.Link>
-        </Nav>
-        <Nav className="ml-auto">
+          <Nav.Link as={Link} to="/networth">Net Worth</Nav.Link>
+          <Nav.Link as={Link} to="/spending">Spending</Nav.Link>
+          <Nav.Link as={Link} to="/news">News</Nav.Link>
+          <Nav.Link as={Link} to="/notifications">Notifications</Nav.Link>
+          <Nav.Link as={Link} to="/futureme">Future Me</Nav.Link>
+          <Nav className="ml-auto">
           <AuthButton />
+          </Nav>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
