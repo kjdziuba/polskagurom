@@ -1,78 +1,74 @@
-import React, { useEffect, useRef } from "react";
-import {
-  Chart,
-  LineController,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-} from "chart.js";
-import axios from "axios";
+// frontend/src/components/NetWorth.js
 
-Chart.register(
-  LineController,
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Register necessary chart components
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend
 );
 
-const NetWorth = () => {
-  const chartRef = useRef(null);
-  const chartInstanceRef = useRef(null);
+function NetWorth() {
+  const [netWorthData, setNetWorthData] = useState(null);
 
   useEffect(() => {
-    const ctx = chartRef.current.getContext("2d");
-
-    // Destroy the existing chart instance if it exists
-    if (chartInstanceRef.current) {
-      chartInstanceRef.current.destroy();
-      chartInstanceRef.current = null;
-    }
-
     axios
-      .get("/api/net-worth/")
+      .get("http://localhost:5000/api/net-worth/")
       .then((response) => {
-        const netWorthData = response.data;
-
-        chartInstanceRef.current = new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: netWorthData.dates,
-            datasets: [
-              {
-                label: "Net Worth",
-                data: netWorthData.values,
-                fill: false,
-                borderColor: "rgb(75, 192, 192)",
-                tension: 0.1,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              x: {
-                type: "category",
-              },
-              y: {
-                type: "linear",
-              },
-            },
-          },
-        });
+        setNetWorthData(response.data);
       })
       .catch((error) => {
-        console.error("There was an error fetching the net worth data!", error);
+        console.error("Error fetching net worth data:", error);
       });
-
-    return () => {
-      if (chartInstanceRef.current) {
-        chartInstanceRef.current.destroy();
-      }
-    };
   }, []);
 
-  return <canvas ref={chartRef}></canvas>;
-};
+  if (!netWorthData) return <div>Loading...</div>;
+
+  const data = {
+    labels: netWorthData.dates,
+    datasets: [
+      {
+        label: "Net Worth",
+        data: netWorthData.values,
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      x: {
+        type: "category",
+      },
+      y: {
+        type: "linear",
+      },
+    },
+  };
+
+  return (
+    <div>
+      <h2>Net Worth Over Time</h2>
+      <Line data={data} options={options} />
+    </div>
+  );
+}
 
 export default NetWorth;
