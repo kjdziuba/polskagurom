@@ -23,9 +23,9 @@ function App() {
           <Route path="/" element={<HomeWeb/>}/>
           <Route path="/networth" element={<NetWorthWeb/>} />
           <Route path="/spending" element={<SpendingWeb/>} />
-          <Route path="/news" component={NewsWeb} />
-          <Route path="/notifications" component={NotificationsWeb} />
-          <Route path="/futureme" component={FutureMeWeb} />
+          <Route path="/news" element={<NewsWeb/>} />
+          <Route path="/notifications" element={<NotificationsWeb/>} />
+          <Route path="/futureme" element={<FutureMeWeb/>} />
         </Routes>
       </div>
     </Router>
