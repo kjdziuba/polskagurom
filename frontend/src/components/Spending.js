@@ -63,33 +63,36 @@ function SpendingHistogram() {
 
   if (!spendingHistory) return <div>Loading...</div>;
 
+  const categories = ['Rent', 'Food', 'Utilities', 'Entertainment'];
   const data = {
     labels: spendingHistory.map(entry => entry.date),
-    datasets: [
-      {
-        label: 'Spending Amount',
-        data: spendingHistory.map(entry => entry.amount),
-        backgroundColor: spendingHistory.map((_, index) => [
-          '#FF6384', // Rent
-          '#36A2EB', // Food
-          '#FFCE56', // Utilities
-          '#4BC0C0', // Entertainment
-        ][index % 4]),
-        borderColor: spendingHistory.map((_, index) => [
-          '#FF6384', // Rent
-          '#36A2EB', // Food
-          '#FFCE56', // Utilities
-          '#4BC0C0', // Entertainment
-        ][index % 4]),
-        borderWidth: 1,
-      },
-    ],
+    datasets: categories.map((category, index) => ({
+      label: category,
+      data: spendingHistory.map(entry => entry.amount[index]),
+      backgroundColor: [
+        '#FF6384', // Rent
+        '#36A2EB', // Food
+        '#FFCE56', // Utilities
+        '#4BC0C0', // Entertainment
+      ][index],
+      borderColor: [
+        '#FF6384', // Rent
+        '#36A2EB', // Food
+        '#FFCE56', // Utilities
+        '#4BC0C0', // Entertainment
+      ][index],
+      borderWidth: 1,
+    })),
   };
 
   const options = {
     scales: {
+      x: {
+        stacked: true,
+      },
       y: {
         beginAtZero: true,
+        stacked: true,
       },
     },
     plugins: {

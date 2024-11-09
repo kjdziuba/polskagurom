@@ -24,7 +24,7 @@ def get_spending_history():
         {
             'date': '2021-01-02',
             'categories': ['Rent', 'Food', 'Utilities', 'Entertainment'],
-            'amount': [8400, 300, 150, 200]
+            'amount': [400, 300, 150, 200]
         },
         {
             'date': '2021-01-03',
