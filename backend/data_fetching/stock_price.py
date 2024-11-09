@@ -21,7 +21,7 @@ def save_data(path, data):
     df = df[ ['Date'] + [ col for col in df.columns if col != 'Date' ] ]
     df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%Y-%m-%d')
     #df.to_csv(path+".csv", index=False)
-    df.to_json(path+".json", orient='records')
+    df.to_json(path, orient='records')
 
 
 def create_folder(folder):
@@ -29,10 +29,10 @@ def create_folder(folder):
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-def multiple_stocks(tickers, start_date, end_date,folder="stock_data"):
+def multiple_stocks(tickers, start_date, end_date,folder="data"):
     create_folder(folder)
     for ticker in tickers:
-        save_data("./stock_data/"+ticker+".json",get_historical_stock_price(ticker, start_date, end_date))
+        save_data(f"./{folder}/{ticker}.json",get_historical_stock_price(ticker, start_date, end_date))
 
 def live_stock_price(ticker):
     stock = yf.Ticker(ticker)
@@ -41,7 +41,7 @@ def live_stock_price(ticker):
 ## Main
 
 #d = get_historical_stock_price('AAPL', '2020-01-01', '2020-12-31')
-#save_data('AAPL', d)
+#save_data('AAPL.json', d)
 
-#ST = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'FB', 'TSLA', 'NVDA', 'PYPL', 'ADBE', 'NFLX']
-#multiple_stocks(ST, '2020-01-01', '2020-12-31')
+ST = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'FB', 'TSLA', 'NVDA', 'PYPL', 'ADBE', 'NFLX']
+multiple_stocks(ST, '2020-01-01', '2020-12-31')
