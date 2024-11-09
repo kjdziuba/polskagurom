@@ -4,6 +4,7 @@ from routes.future_me import future_me_bp
 from routes.spending import spending_bp
 from routes.news import news_bp
 from routes.notifications import notifications_bp
+from routes.spending import spending_extended_bp
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -19,6 +20,7 @@ app.register_blueprint(future_me_bp)
 app.register_blueprint(spending_bp)
 app.register_blueprint(news_bp)
 app.register_blueprint(notifications_bp)
+app.register_blueprint(spending_extended_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

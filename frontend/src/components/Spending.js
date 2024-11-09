@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend,CategoryScale, LinearScale, BarElement } from "chart.js";
 
 // Register necessary chart components
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 function Spending() {
   const [spendingData, setSpendingData] = useState(null);
@@ -41,10 +41,70 @@ function Spending() {
 
   return (
     <div>
-      <h2>Spending Breakdown</h2>
+      <h2>Spending Breakdown (Last Month)</h2>
       <Pie data={data} />
     </div>
   );
 }
 
-export default Spending;
+function SpendingHistogram() {
+  const [spendingHistory, setSpendingHistory] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/spending_extended/')
+      .then((response) => {
+        setSpendingHistory(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching spending history:', error);
+      });
+  }, []);
+
+  if (!spendingHistory) return <div>Loading...</div>;
+
+  const data = {
+    labels: spendingHistory.map(entry => entry.date),
+    datasets: [
+      {
+        label: 'Spending Amount',
+        data: spendingHistory.map(entry => entry.amount),
+        backgroundColor: spendingHistory.map((_, index) => [
+          '#FF6384', // Rent
+          '#36A2EB', // Food
+          '#FFCE56', // Utilities
+          '#4BC0C0', // Entertainment
+        ][index % 4]),
+        borderColor: spendingHistory.map((_, index) => [
+          '#FF6384', // Rent
+          '#36A2EB', // Food
+          '#FFCE56', // Utilities
+          '#4BC0C0', // Entertainment
+        ][index % 4]),
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+    },
+  };
+
+  return (
+    <div>
+      <h2>Spending History</h2>
+      <Bar data={data} options={options} />
+    </div>
+  );
+}
+
+export {Spending, SpendingHistogram};

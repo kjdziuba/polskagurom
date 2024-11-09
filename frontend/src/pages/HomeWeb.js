@@ -4,7 +4,7 @@ import { Chart, CategoryScale, LinearScale, registerables } from "chart.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NetWorth from "../components/NetWorth";
 import FutureMe from "../components/FutureMe";
-import Spending from "../components/Spending";
+import {Spending} from "../components/Spending";
 import News from "../components/News";
 import Notifications from "../components/Notifications";
 import "../styles/style.css";

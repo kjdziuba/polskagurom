@@ -1,13 +1,22 @@
 // src/pages/SpendingWeb.js
 import React from "react";
 import { Chart, CategoryScale, LinearScale } from "chart.js";
-import Spending from "../components/Spending";
+import {Spending, SpendingHistogram } from "../components/Spending";
 
 
 function SpendingWeb() {
   return (
-    <div>
-    <h1>About Page</h1>
+    <div className="container">
+    <h1 className="text-center my-4">Spending Breakdown</h1>
+    <div className="row">
+      <div className="col-md-6">
+        <Spending />
+      </div>
+      <div className="col-md-6">
+        <SpendingHistogram />
+        </div>
+    </div>
+    
   </div>
   );
 }
