@@ -8,3 +8,4 @@ torch
 tensorflow
 PyJWT
 python-dotenv
+yfinance
