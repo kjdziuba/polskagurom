@@ -101,7 +101,7 @@ def add_investment(net_worth, stock_df):
         index = stock_df.index[stock_df[('Quantity', 'Date')]==date][0]
         for name in stock_names:
             total_stocks += stock_df.loc[index, ('Quantity', name)] * stock_df.loc[index, ('Price', name)]
-        net_worth.loc[net_worth['Date']==date, 'Investments'] = total_stocks
+        net_worth.loc[net_worth['Date']==date, ['Net Worth', 'Investments']] += total_stocks
         
     return net_worth
 
