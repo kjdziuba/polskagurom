@@ -102,7 +102,7 @@ function SpendingHistogram() {
   }, []);
 
   if (!spendingHistory) return <div>Loading...</div>;
-  console.log("Working Spending data:", spendingHistory);
+
   const allCategories = Array.from(
     new Set(spendingHistory.flatMap((entry) => entry.categories))
   );
@@ -219,4 +219,4 @@ function DetailedSpending() {
   );
 }
 
-export { Spending, SpendingHistogram, DetailedSpending };
+export { Spending, SpendingHistogram, DetailedSpending, COLOR_PALETTE  };
