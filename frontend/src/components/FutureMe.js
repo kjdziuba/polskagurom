@@ -1,6 +1,4 @@
-// src/components/FutureMe.js
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import {
   Box,
@@ -16,14 +14,22 @@ function FutureMe() {
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleSend = async () => {
-    if (message.trim() === "") return;
+  const handleSend = async (defaultMessage) => {
+    const msg = defaultMessage || message;
+    if (msg.trim() === "") return;
 
     // Immediately add the user's message to the conversation and clear the input
-    setConversation((prevConversation) => [
-      ...prevConversation,
-      { user: message, bot: "" },
-    ]);
+    if (!msg.toLowerCase().includes("this is from the user")) {
+      setConversation((prevConversation) => [
+        ...prevConversation,
+        { user: msg, bot: "" },
+      ]);
+    } else {
+      setConversation((prevConversation) => [
+        ...prevConversation,
+        { user: "", bot: "" },
+      ]);
+    }
     setMessage(""); // Clear the message input
     setLoading(true);
 
@@ -33,7 +39,7 @@ function FutureMe() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message: msg }),
       });
 
       if (!response.body) throw new Error("Readable stream not supported");
@@ -64,6 +70,15 @@ function FutureMe() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!window.futureMeInitialized) {
+      handleSend(
+        "This is from the user, explain who you are, summarize the current financial situation and how better it is in the future. explain what you can assist with"
+      );
+      window.futureMeInitialized = true;
+    }
+  }, []);
 
   return (
     <Box>
@@ -105,7 +120,7 @@ function FutureMe() {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSend}
+          onClick={() => handleSend()}
           disabled={loading}
         >
           {loading ? <CircularProgress size={24} /> : "Send"}
