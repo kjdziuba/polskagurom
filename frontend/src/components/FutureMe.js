@@ -1,9 +1,20 @@
+// src/components/FutureMe.js
+
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  CircularProgress,
+} from "@mui/material";
 
 function FutureMe() {
   const [message, setMessage] = useState("");
   const [conversation, setConversation] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSend = async () => {
     if (message.trim() === "") return;
@@ -14,6 +25,7 @@ function FutureMe() {
       { user: message, bot: "" },
     ]);
     setMessage(""); // Clear the message input
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:5000/api/future-me/", {
@@ -48,35 +60,58 @@ function FutureMe() {
       reader.releaseLock();
     } catch (error) {
       console.error("Error communicating with Future Me:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <>
-      <div className="chat-container">
-        {conversation.map((chat, index) => (
-          <div key={index} className="chat-message">
-            <p>
-              <strong>You:</strong> {chat.user}
-            </p>
-            <div>
-              <strong>Future Me:</strong>
-              <ReactMarkdown>{chat.bot}</ReactMarkdown>
-            </div>
-          </div>
-        ))}
-      </div>
-      <textarea
-        className="form-control"
-        rows="3"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Ask Future Me a question..."
-      ></textarea>
-      <button className="btn btn-primary mt-2" onClick={handleSend}>
-        Send
-      </button>
-    </>
+    <Box>
+      <Paper elevation={3} sx={{ padding: 2, mb: 2 }}>
+        <Typography variant="h5" gutterBottom>
+          Future Me Assistant
+        </Typography>
+        <Box
+          sx={{
+            maxHeight: "400px",
+            overflowY: "auto",
+            mb: 2,
+            padding: 1,
+            backgroundColor: "#fafafa",
+          }}
+        >
+          {conversation.map((chat, index) => (
+            <Box key={index} sx={{ mb: 2 }}>
+              <Typography variant="body1" color="textPrimary">
+                <strong>You:</strong> {chat.user}
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                <strong>Future Me:</strong>{" "}
+                <ReactMarkdown>{chat.bot}</ReactMarkdown>
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+        <TextField
+          fullWidth
+          multiline
+          minRows={2}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Ask Future Me a question..."
+          variant="outlined"
+          sx={{ mb: 2 }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSend}
+          disabled={loading}
+        >
+          {loading ? <CircularProgress size={24} /> : "Send"}
+        </Button>
+      </Paper>
+    </Box>
   );
 }
 

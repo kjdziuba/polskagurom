@@ -1,13 +1,15 @@
-// frontend/src/components/Notifications.js
+// src/components/Notifications.js
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
+  Card,
+  CardContent,
+  Typography,
   List,
   ListItem,
   ListItemText,
   Button,
-  Typography,
 } from "@mui/material";
 
 const Notifications = () => {
@@ -27,34 +29,37 @@ const Notifications = () => {
   const handleBuyStock = (symbol) => {
     // Implement the action to buy the stock
     alert(`Initiating purchase of ${symbol} stock.`);
-    // You can navigate to a purchase page or open a dialog here
   };
 
+  if (!notifications.length) return <div>Loading...</div>;
+
   return (
-    <div>
-      <Typography variant="h5" gutterBottom>
-        Notifications
-      </Typography>
-      <List>
-        {notifications.map((notification, index) => (
-          <ListItem key={index} sx={{ display: "flex", alignItems: "center" }}>
-            <ListItemText
-              primary={notification.message}
-              secondary={new Date(notification.timestamp).toLocaleString()}
-            />
-            {notification.significant && (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => handleBuyStock(notification.symbol)}
-              >
-                Buy {notification.symbol}
-              </Button>
-            )}
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    <Card elevation={3} sx={{ mb: 4 }}>
+      <CardContent>
+        <Typography variant="h5" gutterBottom>
+          Notifications
+        </Typography>
+        <List>
+          {notifications.map((notification, index) => (
+            <ListItem key={index} alignItems="flex-start">
+              <ListItemText
+                primary={notification.message}
+                secondary={new Date(notification.timestamp).toLocaleString()}
+              />
+              {notification.significant && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleBuyStock(notification.symbol)}
+                >
+                  Buy {notification.symbol}
+                </Button>
+              )}
+            </ListItem>
+          ))}
+        </List>
+      </CardContent>
+    </Card>
   );
 };
 

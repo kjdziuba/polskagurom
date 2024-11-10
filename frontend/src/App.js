@@ -1,8 +1,8 @@
-// frontend/src/App.js
+// src/App.js
 
 import React from "react";
-import { Chart, CategoryScale, LinearScale } from "chart.js";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { CssBaseline, Box, Typography, Container } from "@mui/material";
 import NavigationBar from "./components/Navbar";
 import SpendingWeb from "./pages/SpendingWeb";
 import NewsWeb from "./pages/NewsWeb";
@@ -13,8 +13,6 @@ import HomeWeb from "./pages/HomeWeb";
 import { useAuth0 } from "@auth0/auth0-react";
 import HeroImage from "./assets/hero_image.jpeg";
 
-Chart.register(CategoryScale, LinearScale);
-
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
 
@@ -24,31 +22,40 @@ function App() {
 
   return (
     <Router>
+      <CssBaseline />
       <NavigationBar />
-      <div
+      <Box
         className="hero-section"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${HeroImage})`,
+        sx={{
+          backgroundImage: `url(${HeroImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "200px",
+          height: { xs: 200, md: 300 },
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          marginBottom: "2rem",
+          mb: 4,
         }}
       >
-        <div className="text-center text-white">
-          <h1 className="display-3 mb-4">Timewise Finance</h1>
-          <p className="lead">Take control of your financial future</p>
-        </div>
-      </div>
+        <Container maxWidth="md">
+          <Box className="hero-text">
+            <Typography variant="h2" component="h1" gutterBottom>
+              Timewise Finance
+            </Typography>
+            <Typography variant="h5">
+              Take control of your financial future
+            </Typography>
+          </Box>
+        </Container>
+      </Box>
       {!isAuthenticated ? (
-        <div className="container text-center">
-          <h2>Please log in to access the dashboard.</h2>
-        </div>
+        <Container maxWidth="md" sx={{ textAlign: "center" }}>
+          <Typography variant="h5">
+            Please log in to access the dashboard.
+          </Typography>
+        </Container>
       ) : (
-        <div className="container">
+        <Container maxWidth="lg">
           <Routes>
             <Route path="/" element={<HomeWeb />} />
             <Route path="/networth" element={<NetWorthWeb />} />
@@ -57,7 +64,7 @@ function App() {
             <Route path="/notifications" element={<NotificationsWeb />} />
             <Route path="/futureme" element={<FutureMeWeb />} />
           </Routes>
-        </div>
+        </Container>
       )}
     </Router>
   );

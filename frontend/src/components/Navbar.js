@@ -1,4 +1,4 @@
-// frontend/src/components/NavigationBar.js
+// src/components/NavigationBar.js
 
 import React from "react";
 import {
@@ -10,9 +10,10 @@ import {
   Menu,
   MenuItem,
   Box,
+  Container,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/Menu";
 import AuthButton from "./AuthButton";
 
 function NavigationBar() {
@@ -27,6 +28,7 @@ function NavigationBar() {
   };
 
   const navLinks = [
+    { title: "Home", path: "/" },
     { title: "Net Worth", path: "/networth" },
     { title: "Spending", path: "/spending" },
     { title: "News", path: "/news" },
@@ -35,76 +37,79 @@ function NavigationBar() {
   ];
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        {/* Logo and Title */}
-        <Typography
-          variant="h6"
-          component={Link}
-          to="/"
-          sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }}
-        >
-          Timewise Finance
-        </Typography>
+    <AppBar position="sticky" color="primary">
+      <Container maxWidth="lg">
+        <Toolbar disableGutters>
+          {/* Logo */}
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            sx={{
+              flexGrow: 1,
+              textDecoration: "none",
+              color: "inherit",
+              fontWeight: "bold",
+            }}
+          >
+            Timewise Finance
+          </Typography>
 
-        {/* Mobile Menu Button */}
-        <Box sx={{ display: { xs: "flex", md: "none" } }}>
-          <IconButton
-            size="large"
-            aria-label="navigation menu"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleOpenNavMenu}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorElNav}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            open={Boolean(anchorElNav)}
-            onClose={handleCloseNavMenu}
-          >
+          {/* Desktop Menu */}
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {navLinks.map((link) => (
-              <MenuItem
+              <Button
                 key={link.title}
-                onClick={handleCloseNavMenu}
                 component={Link}
                 to={link.path}
+                color="inherit"
+                sx={{ marginLeft: 2 }}
               >
-                <Typography textAlign="center">{link.title}</Typography>
-              </MenuItem>
+                {link.title}
+              </Button>
             ))}
-            <MenuItem onClick={handleCloseNavMenu}>
-              <AuthButton />
-            </MenuItem>
-          </Menu>
-        </Box>
+            <AuthButton />
+          </Box>
 
-        {/* Desktop Menu */}
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          {navLinks.map((link) => (
-            <Button
-              key={link.title}
+          {/* Mobile Menu */}
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="menu"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
               color="inherit"
-              component={Link}
-              to={link.path}
             >
-              {link.title}
-            </Button>
-          ))}
-          <AuthButton />
-        </Box>
-      </Toolbar>
+              <MenuIcon />
+            </IconButton>
+
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              keepMounted
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+            >
+              {navLinks.map((link) => (
+                <MenuItem
+                  key={link.title}
+                  component={Link}
+                  to={link.path}
+                  onClick={handleCloseNavMenu}
+                >
+                  {link.title}
+                </MenuItem>
+              ))}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <AuthButton />
+              </MenuItem>
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 }

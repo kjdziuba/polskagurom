@@ -1,39 +1,34 @@
+// src/pages/HomeWeb.js
+
 import React from "react";
-import { Chart, registerables } from "chart.js";
+import { Grid, Container } from "@mui/material";
 import NetWorth from "../components/NetWorth";
-import FutureMe from "../components/FutureMe";
 import { Spending } from "../components/Spending";
 import News from "../components/News";
 import Notifications from "../components/Notifications";
-import "../styles/style.css";
-Chart.register(...registerables);
+import FutureMe from "../components/FutureMe";
 
 function HomeWeb() {
   return (
-    <div className="container">
-      <h1 className="text-center my-4">Timewise Finance</h1>
-      <div className="row">
-        <div className="col-md-6">
+    <Container maxWidth="lg">
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
           <NetWorth />
-        </div>
-        <div className="col-md-6">
+        </Grid>
+        <Grid item xs={12} md={6}>
           <Spending />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6">
+        </Grid>
+        <Grid item xs={12} md={6}>
           <News />
-        </div>
-        <div className="col-md-6">
+        </Grid>
+        <Grid item xs={12} md={6}>
           <Notifications />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
+        </Grid>
+        <Grid item xs={12}>
           <FutureMe />
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 

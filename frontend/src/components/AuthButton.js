@@ -1,15 +1,23 @@
+// src/components/AuthButton.js
+
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "@mui/material";
 
 const AuthButton = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return isAuthenticated ? (
-    <button onClick={() => logout({ returnTo: window.location.origin })}>
+    <Button
+      color="inherit"
+      onClick={() => logout({ returnTo: window.location.origin })}
+    >
       Log Out
-    </button>
+    </Button>
   ) : (
-    <button onClick={() => loginWithRedirect()}>Log In</button>
+    <Button color="inherit" onClick={() => loginWithRedirect()}>
+      Log In
+    </Button>
   );
 };
 

@@ -1,90 +1,23 @@
 body {
-  padding-bottom: 50px; 
-}
-
-.card-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.card {
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-}
-
-.navbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.nav-link {
-  font-size: 1.1rem;
-}
-
-.navbar-brand {
-  font-weight: bold;
-  font-size: 1.5rem;
+  margin: 0;
+  font-family: Roboto, sans-serif;
 }
 
 .hero-section {
-  position: relative;
-  transition: all 0.3s ease;
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.hero-section:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-  background: linear-gradient(to top, #fff, transparent);
+.hero-text {
+  color: white;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.display-3 {
-  font-weight: 600;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.lead {
-  font-size: 1.5rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.styled-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 18px;
-  text-align: left;
-}
-
-.styled-table thead tr {
-  background-color: #009879;
-  color: #ffffff;
-  text-align: left;
-}
-
-.styled-table th,
-.styled-table td {
-  padding: 12px 15px;
-  border: 1px solid #dddddd;
-}
-
-.styled-table tbody tr {
-  border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
-}
-
-.styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
-}
-
-.styled-table tbody tr.active-row {
-  font-weight: bold;
-  color: #009879;
+.container {
+  padding: 20px;
 }
