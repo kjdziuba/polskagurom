@@ -1,12 +1,9 @@
 # backend/routes/future_me.py
-
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response, stream_with_context
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-import os
 import json
-import pandas as pd
 from data_analysis.calculate_spending import create_spending_df
 
 load_dotenv()
@@ -14,10 +11,7 @@ load_dotenv()
 future_me_bp = Blueprint('future_me_bp', __name__, url_prefix='/api/future-me')
 
 # Set your OpenAI API key
-client = OpenAI(
-    # defaults to os.environ.get("OPENAI_API_KEY")
-    api_key = os.getenv('OPENAI_API_KEY')
-)
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 @future_me_bp.route('/', methods=['POST'])
 def future_me():
@@ -43,8 +37,16 @@ def future_me():
         model='gpt-4o',
         messages=messages,
         max_tokens=700,
-        stream=False
+        stream=True
     )
 
-    answer = response.choices[0].message.content.strip()
-    return jsonify({'response': answer})
+    def generate():
+        assistant_reply = ""
+        for chunk in response:
+            chunk_message = chunk.choices[0].delta.content
+            if chunk_message is not None:
+                assistant_reply += chunk_message
+                print(chunk_message)
+                yield f"{chunk_message}"
+    
+    return Response(stream_with_context(generate()), mimetype='text/plain')
