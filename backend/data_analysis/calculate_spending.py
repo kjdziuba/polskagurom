@@ -25,6 +25,7 @@ def read_spending_data(bank_acc_file):
     return spending_data
 
 def create_spending_df(start_date='2024-01-01', end_date=dt.datetime.today().strftime('%Y-%m-%d')):
+    # DataFrame - Date, Title, Amount, Category - Use Date (x-axis), Amount (y-axis), Category (color)
     # Create DataFrame for spending
     spending = pd.DataFrame(columns=['Date', 'Title', 'Amount', 'Category'])
     spending['Date'] = pd.to_datetime(spending['Date'], format='%Y-%m-%d')
@@ -51,9 +52,18 @@ def get_last_month_spending(spending):
     return get_spending_from_last_x_days(spending, 30)
 
 def get_spending_by_category(spending, month=None):
+    # Filter by month, group by category, return dataframe
     if month:
         spending = spending[spending['Date'].dt.month == month]
     return spending.groupby('Category')['Amount'].sum()
 
+def get_categories_amounts(spending, month=None):
+    data = get_spending_by_category(spending, month)
+    date = f'2024-{month}'
+    categories = data.index.values
+    amounts = data.values
+    return date, categories.tolist(), amounts.tolist()
+
 # Create DataFrame for spending
-spending = create_spending_df()
+#data = create_spending_df()
+#print(get_categories_amounts(data, 1))
