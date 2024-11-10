@@ -10,4 +10,4 @@ PyJWT
 python-dotenv
 yfinance
 nltk
-re
+ openpyxl
