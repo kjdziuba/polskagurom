@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pie, Bar } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend,CategoryScale, LinearScale, BarElement } from "chart.js";
-
+import moment from "moment";
 // Register necessary chart components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -86,7 +86,7 @@ function SpendingHistogram() {
   }, []);
 
   if (!spendingHistory) return <div>Loading...</div>;
-
+  console.log("Working Spending data:", spendingHistory);
   const allCategories = Array.from(new Set(spendingHistory.flatMap(entry => entry.categories)));
   const categoryColorMap = mapCategoriesToColors(allCategories);
 
@@ -129,4 +129,81 @@ function SpendingHistogram() {
   );
 }
 
-export {Spending, SpendingHistogram};
+function DetailedSpending() {
+  const [spendingData, setSpendingData] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/specific_spending/")
+      .then((response) => {
+        setSpendingData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching spending data:", error);
+      });
+  }, []);
+
+  if (!spendingData) return <div>Loading...</div>;
+
+
+  const allMonths = Array.from(
+    new Set((spendingData.map(entry => moment(entry.date).format('YYYY-MM'))))
+);
+const handleMonthChange = (e) => {
+  setSelectedMonth(e.target.value);
+};
+
+
+const filterByYearMonth = (yearMonth) => {
+  return spendingData.filter(record => record.date.startsWith(yearMonth));
+};
+
+const filteredSpendingData = filterByYearMonth(selectedMonth);
+console.log('filteredSpendingData:', filteredSpendingData); // Debugging log
+
+
+
+console.log('Spending data:', spendingData); // Debugging log
+
+return (
+  <div>
+          <h2>Select a Month</h2>
+          <select value={selectedMonth} onChange={handleMonthChange}>
+              <option value="" disabled>Select an option</option>
+              {allMonths.map((value, index) => (
+                  <option key={index} value={value}>
+                      {value}
+                  </option>
+              ))}
+          </select>
+          {selectedMonth && (
+      <div>
+        <h3>Spending Data for {selectedMonth}</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+          {filteredSpendingData.map((entry, index) => (
+                <tr key={index}>
+                  <td>{entry.date}</td>
+                  <td>{entry.title}</td>
+                  <td>{entry.category}</td>
+                  <td>{entry.amount}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+);
+}
+
+export {Spending, SpendingHistogram, DetailedSpending};

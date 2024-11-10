@@ -1,7 +1,7 @@
 // src/pages/SpendingWeb.js
 import React from "react";
 import { Chart, CategoryScale, LinearScale } from "chart.js";
-import {Spending, SpendingHistogram } from "../components/Spending";
+import {Spending, SpendingHistogram, DetailedSpending} from "../components/Spending";
 
 
 function SpendingWeb() {
@@ -16,7 +16,11 @@ function SpendingWeb() {
         <SpendingHistogram />
         </div>
     </div>
-    
+    <div className="row">
+      <div className="col">
+        <DetailedSpending />
+      </div>
+      </div>
   </div>
   );
 }

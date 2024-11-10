@@ -42,10 +42,19 @@ def get_spending_history():
 def get_specific_spending():
     specific_data = create_spending_df()
     specific_data['Date'] = specific_data['Date'].apply(lambda x: x.strftime('%Y-%m-%d'))
-    spending_history = {
-        'date': specific_data['Date'].tolist(),
-        'title': specific_data['Title'].tolist(),
-        'category': specific_data['Category'].tolist(),
-        'amount': specific_data['Amount'].tolist()
-    }
-    return jsonify([spending_history])
+    spending_history = []
+
+    date = specific_data['Date'].tolist()
+    categories = specific_data['Category'].tolist()
+    amounts = specific_data['Amount'].tolist()
+    title = specific_data['Title'].tolist()
+
+    for i in range(len(date)):
+        spending_history.append({
+            'date': date[i],
+            'category': categories[i],
+            'amount': amounts[i],
+            'title': title[i]
+        })
+        
+    return jsonify(spending_history)
