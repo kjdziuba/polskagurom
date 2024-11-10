@@ -8,6 +8,11 @@ from routes.spending import spending_extended_bp
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
+import sys
+
+# Add the path to the folder containing the module
+sys.path.append(os.path.relpath(".."))
+
 
 load_dotenv()
 app = Flask(__name__)

@@ -8,6 +8,27 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend,CategoryScale, LinearScal
 // Register necessary chart components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
+const COLOR_PALETTE = [        '#75d856',
+  '#b04b38',
+  '#f00099',
+  '#55897f',
+  '#e5e3de',
+  '#d9c1a8',
+  '#5f7580',
+  '#8625b6',
+  '#0662f4',
+  '#d88c40',
+  '#3ef81d',
+  '#260137',
+  '#3e8c26',
+  '#8d6d1d',
+  '#c2e3c2',
+  '#18d915',
+  '#ca31a8',
+  '#98c76f',
+  '#83aace',
+  '#d8a1c5'];
+
 function Spending() {
   const [spendingData, setSpendingData] = useState(null);
 
@@ -29,12 +50,7 @@ function Spending() {
     datasets: [
       {
         data: spendingData.amounts,
-        backgroundColor: [
-          "#FF6384", // Rent
-          "#36A2EB", // Food
-          "#FFCE56", // Utilities
-          "#4BC0C0", // Entertainment
-        ],
+        backgroundColor: COLOR_PALETTE,
       },
     ],
   };
@@ -63,24 +79,14 @@ function SpendingHistogram() {
 
   if (!spendingHistory) return <div>Loading...</div>;
 
-  const categories = ['Rent', 'Food', 'Utilities', 'Entertainment'];
+  const categories = spendingHistory[0].categories;
   const data = {
     labels: spendingHistory.map(entry => entry.date),
     datasets: categories.map((category, index) => ({
       label: category,
       data: spendingHistory.map(entry => entry.amount[index]),
-      backgroundColor: [
-        '#FF6384', // Rent
-        '#36A2EB', // Food
-        '#FFCE56', // Utilities
-        '#4BC0C0', // Entertainment
-      ][index],
-      borderColor: [
-        '#FF6384', // Rent
-        '#36A2EB', // Food
-        '#FFCE56', // Utilities
-        '#4BC0C0', // Entertainment
-      ][index],
+      backgroundColor: COLOR_PALETTE [index],
+      borderColor: COLOR_PALETTE [index],
       borderWidth: 1,
     })),
   };

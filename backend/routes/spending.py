@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from data_analysis.calculate_spending import *
 
 spending_bp = Blueprint('spending_bp', __name__, url_prefix='/api/spending')
 spending_extended_bp = Blueprint('spending_extended_bp', __name__, url_prefix='/api/spending_extended')
@@ -12,29 +13,20 @@ def get_spending():
     }
     return jsonify(spending_data)
 
+
 @spending_extended_bp.route('/', methods=['GET'])
 def get_spending_history():
+    data = create_spending_df()
+    
     # Mock data
-    spending_history = [
-        {
-            'date': '2021-01-01',
-            'categories': ['Rent', 'Food', 'Utilities', 'Entertainment'],
-            'amount': [800, 300, 150, 200]
-        },
-        {
-            'date': '2021-01-02',
-            'categories': ['Rent', 'Food', 'Utilities', 'Entertainment'],
-            'amount': [400, 300, 150, 200]
-        },
-        {
-            'date': '2021-01-03',
-            'categories': ['Rent', 'Food', 'Utilities', 'Entertainment'],
-            'amount': [230, 300, 150, 200]
-        },
-        {
-            'date': '2021-01-04',
-            'categories': ['Rent', 'Food', 'Utilities', 'Entertainment'],
-            'amount': [1000, 300, 150, 200]
-        }
-    ]
+    spending_history = []
+
+    for i in range(10):
+        date, categories, amounts = get_categories_amounts(data, 11-i)
+        spending_history.insert(0,{
+            'date': date,
+            'categories': categories,
+            'amount': amounts
+        })
+    print(spending_history)
     return jsonify(spending_history)

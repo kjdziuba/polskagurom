@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import datetime as dt
-import nlp_categorize as nlp
+import data_analysis.nlp_categorize as nlp
 
 ACCOUNT_FILES = ['data/bank_acc/bank_acc_1.xlsx', 'data/bank_acc/bank_acc_2.xlsx']
 
