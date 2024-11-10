@@ -1,12 +1,16 @@
 // src/pages/About.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Spending from '../components/FutureMe';
+import FutureMe from '../components/FutureMe';
 
 function FutureMeWeb() {
   return (
-    <div>
-      <h1>About Page</h1>
+    <div className="container">
+      <h1 className="text-center my-4">Future Me</h1>
+      <div className="row">
+        <div className="col-md-6">
+          <FutureMe />
+        </div>
+      </div>
     </div>
   );
 }

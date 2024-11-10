@@ -1,12 +1,16 @@
 // src/pages/About.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Spending from '../components/Notifications';
+import Notifications from '../components/Notifications';
 
 function NotificationsWeb() {
   return (
-    <div>
-      <h1>About Page</h1>
+    <div className="container">
+      <h1 className="text-center my-4">Notifications</h1>
+      <div className="row">
+        <div className="col-md-6">
+          <Notifications />
+        </div>
+      </div>
     </div>
   );
 }
