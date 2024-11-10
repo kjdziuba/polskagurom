@@ -10,4 +10,5 @@ PyJWT
 python-dotenv
 yfinance
 nltk
- openpyxl
+openpyxl
+scikit-learn
