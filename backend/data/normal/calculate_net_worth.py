@@ -172,6 +172,9 @@ def save_stock(stock, filename='stock.json'):
 def save_net_worth(net_worth, filename='net_worth.json'):
     net_worth['Date'] = net_worth['Date'].dt.strftime('%Y-%m-%d')
     net_worth.to_json(filename)
+#def rounding_net_worth(net_worth):
+    
+
 
 ACCOUNTS = {"Cash": [], "Savings": []}
 for acc_file in ACCOUNT_FILES["Cash"]:
@@ -192,6 +195,14 @@ for acc_type in ACCOUNTS:
 net_worth = add_investment(net_worth, stock)
 net_worth = add_cash_investment(net_worth, investment)
 #print(net_worth.tail(50))
+
+for i in range(0, len(net_worth)):
+    for col in ['Net Worth', 'Cash', 'Savings', 'Investments']:
+        net_worth.loc[i, col] = round(net_worth.loc[i, col], 2)
+
+for i in range(0, len(stock)):
+    for col in ['Apple', 'Amazon', 'AMD', 'Coca-Cola', 'Bank of America', 'Tesla']:
+        stock.loc[i, col] = round(stock.loc[i, ('Price',col)], 2)
 
 # Save net worth data
 save_net_worth(net_worth)
