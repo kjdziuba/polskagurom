@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Grid, Container } from "@mui/material";
-import NetWorth from "../components/NetWorth";
+import {NetWorth} from "../components/NetWorth";
 import { Spending } from "../components/Spending";
 import News from "../components/News";
 import Notifications from "../components/Notifications";

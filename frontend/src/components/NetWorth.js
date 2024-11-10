@@ -13,6 +13,49 @@ import {
   Legend,
 } from "recharts";
 import { Typography, Card, CardContent } from "@mui/material";
+import { Pie } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip as ChartJSTooltip,
+  Legend as ChartJSLegend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from "chart.js";
+import moment from "moment";
+// Register necessary chart components
+ChartJS.register(
+  ArcElement,
+  ChartJSTooltip,
+  ChartJSLegend,
+  CategoryScale,
+  LinearScale,
+  BarElement
+);
+
+const COLOR_PALETTE = [
+  "#75d856",
+  "#b04b38",
+  "#f00099",
+  "#55897f",
+  "#e5e3de",
+  "#d9c1a8",
+  "#5f7580",
+  "#8625b6",
+  "#0662f4",
+  "#d88c40",
+  "#3ef81d",
+  "#260137",
+  "#3e8c26",
+  "#8d6d1d",
+  "#c2e3c2",
+  "#18d915",
+  "#ca31a8",
+  "#98c76f",
+  "#83aace",
+  "#d8a1c5",
+];
 
 const NetWorth = () => {
   const [data, setData] = useState([]);
@@ -127,4 +170,48 @@ const NetWorth = () => {
   );
 };
 
-export default NetWorth;
+
+
+// FIX LATER : This function is not working properly - negative values also add to the Pie
+function PlotCurrentInvestments(){
+  const [investmentData, setInvestmentData] = useState(null);
+  console.log("investmentData", investmentData);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/net-worth-investment/")
+      .then((response) => {
+        const responseData = response.data;
+        setInvestmentData(responseData);
+      })
+      .catch((error) => {
+        console.error("Error fetching investment data:", error);
+      });
+  }, []);
+  if (!investmentData) return <div>Loading...</div>;
+  console.log("investmentData", investmentData);
+
+  return (
+    <div>
+          <h2>Current Investments</h2>
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>Stock</th>
+                <th>Profit</th>
+              </tr>
+            </thead>
+            <tbody>
+                  {investmentData.categories.map((category, index) => (
+                    <tr key={index}>
+                      <td>{category}</td>
+                      <td>{investmentData.amounts[index]}</td>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        </div>
+  );
+}
+
+
+export {NetWorth, PlotCurrentInvestments};

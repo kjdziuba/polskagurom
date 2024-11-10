@@ -5,6 +5,7 @@ import json
 import os
 
 net_worth_bp = Blueprint('net_worth_bp', __name__, url_prefix='/api/net-worth')
+net_worth_investment_bp = Blueprint('net_worth_investment_bp', __name__, url_prefix='/api/net-worth-investment')
 
 from sklearn.linear_model import LinearRegression
 import numpy as np
@@ -67,3 +68,12 @@ def get_net_worth():
         print(f"Error reading net worth data: {e}")
         return jsonify({'error': 'Failed to read net worth data'}), 500
 
+@net_worth_investment_bp.route('/', methods=['GET'])
+def get_new_worth_investments():
+    # Load data 
+    da = json.load(open("data/normal/profit.json","r"))
+    data = {
+        'categories': list(da.keys()),
+        'amounts': list(da.values())
+    }
+    return jsonify(data)

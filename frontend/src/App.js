@@ -12,6 +12,7 @@ import FutureMeWeb from "./pages/FutureMeWeb";
 import HomeWeb from "./pages/HomeWeb";
 import { useAuth0 } from "@auth0/auth0-react";
 import HeroImage from "./assets/hero_image.jpeg";
+import ProfilWeb from "./pages/ProfilWeb";
 
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -63,6 +64,7 @@ function App() {
             <Route path="/news" element={<NewsWeb />} />
             <Route path="/notifications" element={<NotificationsWeb />} />
             <Route path="/futureme" element={<FutureMeWeb />} />
+            <Route path="/profil" element={<ProfilWeb />} />
           </Routes>
         </Container>
       )}

@@ -34,6 +34,7 @@ function NavigationBar() {
     { title: "News", path: "/news" },
     { title: "Notifications", path: "/notifications" },
     { title: "Future Me", path: "/futureme" },
+    { title: "Profil", path: "/profil" }
   ];
 
   return (
