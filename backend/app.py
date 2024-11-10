@@ -1,5 +1,6 @@
 from flask import Flask
 from routes.net_worth import net_worth_bp
+from routes.net_worth import new_worth_investment_bp
 from routes.future_me import future_me_bp
 from routes.spending import spending_bp
 from routes.news import news_bp
@@ -28,6 +29,7 @@ app.register_blueprint(news_bp)
 app.register_blueprint(notifications_bp)
 app.register_blueprint(spending_extended_bp)
 app.register_blueprint(specific_spending_bp)
+app.register_blueprint(new_worth_investment_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

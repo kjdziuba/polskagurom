@@ -179,16 +179,16 @@ for acc_file in ACCOUNT_FILES["Savings"]:
     savings_acc = read_savings_acc(acc_file)
     ACCOUNTS["Savings"].append(savings_acc)
 
-net_worth = create_net_worth_df()
-investment = read_investment(INVESTMENT_FILES[0])
-stock = create_stocks_df(investment)
+#net_worth = create_net_worth_df()
+#investment = read_investment(INVESTMENT_FILES[0])
+#stock = create_stocks_df(investment)
 #print(stock.tail(10))
-for acc_type in ACCOUNTS:
-    for account in ACCOUNTS[acc_type]:
-        net_worth = add_account(net_worth, account, acc_type)
+#for acc_type in ACCOUNTS:
+#    for account in ACCOUNTS[acc_type]:
+#        net_worth = add_account(net_worth, account, acc_type)
 
-net_worth = add_investment(net_worth, stock)
-net_worth = add_cash_investment(net_worth, investment)
+#net_worth = add_investment(net_worth, stock)
+#net_worth = add_cash_investment(net_worth, investment)
 #print(net_worth.tail(50))
 
 # Save net worth data

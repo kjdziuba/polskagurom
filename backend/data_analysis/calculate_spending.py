@@ -68,6 +68,10 @@ def get_categories_amounts(spending, month=None):
     amounts = data.values
     return date, categories.tolist(), amounts.tolist()
 
+def save_spending_df(spending, filename='data/normal/spending.json'):
+    spending['Date'] = spending['Date'].dt.strftime('%Y-%m-%d')
+    spending.to_json(filename, index=False, orient='records')
+
 # Create DataFrame for spending
-#data = create_spending_df()
-#print(get_specific_month_spending(data, 1).to_dict())
+data = create_spending_df()
+save_spending_df(data)
