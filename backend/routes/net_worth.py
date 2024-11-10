@@ -71,7 +71,7 @@ def get_net_worth():
 @net_worth_investment_bp.route('/', methods=['GET'])
 def get_new_worth_investments():
     # Load data 
-    da = json.load(open("backend/data/normal/profit.json","r"))
+    da = json.load(open("data/normal/profit.json","r"))
     data = {
         'categories': list(da.keys()),
         'amounts': list(da.values())

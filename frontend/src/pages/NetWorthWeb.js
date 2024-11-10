@@ -1,5 +1,5 @@
 import React from "react";
-import NetWorth from "../components/NetWorth";
+import {NetWorth, PlotCurrentInvestments} from "../components/NetWorth";
 
 function NetWorthWeb() {
   return (
@@ -9,8 +9,11 @@ function NetWorthWeb() {
         <div className="col-md-6">
           <NetWorth />
         </div>
+        <div className="col-md-6">
+          <PlotCurrentInvestments/>
       </div>
     </div>
+  </div>
   );
 }
 

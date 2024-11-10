@@ -13,7 +13,7 @@ import {
   Legend,
 } from "recharts";
 import { Typography, Card, CardContent } from "@mui/material";
-import { Pie, Bar } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -170,9 +170,10 @@ const NetWorth = () => {
   );
 };
 
+// FIX LATER : This function is not working properly - negative values also add to the Pie
 function PlotCurrentInvestments(){
   const [investmentData, setInvestmentData] = useState(null);
-
+  console.log("investmentData", investmentData);
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/net-worth-investment/")
@@ -185,8 +186,7 @@ function PlotCurrentInvestments(){
       });
   }, []);
   if (!investmentData) return <div>Loading...</div>;
-  
-  console.log(investmentData);
+
   const data = {
     labels: investmentData.categories,
     datasets: [

@@ -68,7 +68,8 @@ function Spending() {
   }, []);
 
   if (!spendingData) return <div>Loading...</div>;
-
+  console.log(spendingData.categories);
+  console.log(spendingData.amounts);
   const data = {
     labels: spendingData.categories,
     datasets: [
