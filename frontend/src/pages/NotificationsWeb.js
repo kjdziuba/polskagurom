@@ -1,6 +1,5 @@
-// src/pages/About.js
-import React from 'react';
-import Notifications from '../components/Notifications';
+import React from "react";
+import Notifications from "../components/Notifications";
 
 function NotificationsWeb() {
   return (

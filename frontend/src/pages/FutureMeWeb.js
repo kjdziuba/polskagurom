@@ -1,6 +1,5 @@
-// src/pages/About.js
-import React from 'react';
-import FutureMe from '../components/FutureMe';
+import React from "react";
+import FutureMe from "../components/FutureMe";
 
 function FutureMeWeb() {
   return (

@@ -1,6 +1,5 @@
-// src/pages/About.js
-import React from 'react';
-import NetWorth from '../components/NetWorth';
+import React from "react";
+import NetWorth from "../components/NetWorth";
 
 function NetWorthWeb() {
   return (

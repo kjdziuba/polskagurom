@@ -1,4 +1,3 @@
-// frontend/src/App.js
 import React from "react";
 import { Chart, registerables } from "chart.js";
 import NetWorth from "../components/NetWorth";

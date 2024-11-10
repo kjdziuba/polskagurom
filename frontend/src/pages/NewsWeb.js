@@ -1,6 +1,5 @@
-// src/pages/About.js
-import React from 'react';
-import News from '../components/News';
+import React from "react";
+import News from "../components/News";
 
 function NewsWeb() {
   return (
