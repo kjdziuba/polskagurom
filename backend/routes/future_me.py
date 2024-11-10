@@ -27,7 +27,8 @@ def future_me():
     # Load your JSON file
     try:
         spending_df = create_spending_df()
-        spending_json_str = spending_df.to_json(orient='records')
+        spending_df['Date'] = spending_df['Date'].dt.strftime('%Y-%m-%d')
+        spending_json_str = spending_df.to_json(orient='records', index=False)
     except Exception as e:
         return jsonify({'error': f"Failed to load JSON file: {str(e)}"}), 500
 
@@ -39,9 +40,9 @@ def future_me():
     messages.append({'role': 'user', 'content': "Here is my question to you:" + user_message.strip()})
 
     response = client.chat.completions.create(
-        model='gpt-3.5-turbo',
+        model='gpt-4o',
         messages=messages,
-        max_tokens=150,
+        max_tokens=700,
         stream=False
     )
 
