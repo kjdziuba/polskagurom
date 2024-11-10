@@ -23,6 +23,7 @@ download_nltk_resources()
 # Initialize stopwords and lemmatizer
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
+lemmatizer.lemmatize('running', pos='v')
 
 # Function for text preprocessing
 def preprocess_text(text):
