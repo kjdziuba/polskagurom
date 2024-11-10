@@ -1,40 +1,111 @@
-// frontend/src/components/Navbar.js
+// frontend/src/components/NavigationBar.js
 
 import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
-import AuthButton from "./AuthButton";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Box,
+} from "@mui/material";
 import { Link } from "react-router-dom";
+import { Menu as MenuIcon } from "@mui/icons-material";
+import AuthButton from "./AuthButton";
 
 function NavigationBar() {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const navLinks = [
+    { title: "Net Worth", path: "/networth" },
+    { title: "Spending", path: "/spending" },
+    { title: "News", path: "/news" },
+    { title: "Notifications", path: "/notifications" },
+    { title: "Future Me", path: "/futureme" },
+  ];
+
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
-      <div className="container">
-        <Navbar.Brand as={Link} to="/">
+    <AppBar position="static">
+      <Toolbar>
+        {/* Logo and Title */}
+        <Typography
+          variant="h6"
+          component={Link}
+          to="/"
+          sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }}
+        >
           Timewise Finance
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/networth">
-              Net Worth
-            </Nav.Link>
-            <Nav.Link as={Link} to="/spending">
-              Spending
-            </Nav.Link>
-            <Nav.Link as={Link} to="/news">
-              News
-            </Nav.Link>
-            <Nav.Link as={Link} to="/notifications">
-              Notifications
-            </Nav.Link>
-            <Nav.Link as={Link} to="/futureme">
-              Future Me
-            </Nav.Link>
-          </Nav>
+        </Typography>
+
+        {/* Mobile Menu Button */}
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <IconButton
+            size="large"
+            aria-label="navigation menu"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleOpenNavMenu}
+            color="inherit"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorElNav}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            open={Boolean(anchorElNav)}
+            onClose={handleCloseNavMenu}
+          >
+            {navLinks.map((link) => (
+              <MenuItem
+                key={link.title}
+                onClick={handleCloseNavMenu}
+                component={Link}
+                to={link.path}
+              >
+                <Typography textAlign="center">{link.title}</Typography>
+              </MenuItem>
+            ))}
+            <MenuItem onClick={handleCloseNavMenu}>
+              <AuthButton />
+            </MenuItem>
+          </Menu>
+        </Box>
+
+        {/* Desktop Menu */}
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          {navLinks.map((link) => (
+            <Button
+              key={link.title}
+              color="inherit"
+              component={Link}
+              to={link.path}
+            >
+              {link.title}
+            </Button>
+          ))}
           <AuthButton />
-        </Navbar.Collapse>
-      </div>
-    </Navbar>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }
 
