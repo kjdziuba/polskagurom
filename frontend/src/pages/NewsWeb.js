@@ -1,12 +1,16 @@
 // src/pages/About.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Spending from '../components/News';
+import News from '../components/News';
 
 function NewsWeb() {
   return (
-    <div>
-      <h1>About Page</h1>
+    <div className="container">
+      <h1 className="text-center my-4">News</h1>
+      <div className="row">
+        <div className="col-md-6">
+          <News />
+        </div>
+      </div>
     </div>
   );
 }

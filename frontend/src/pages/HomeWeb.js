@@ -1,7 +1,6 @@
 // frontend/src/App.js
 import React from "react";
-import { Chart, CategoryScale, LinearScale, registerables } from "chart.js";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Chart, registerables } from "chart.js";
 import NetWorth from "../components/NetWorth";
 import FutureMe from "../components/FutureMe";
 import { Spending } from "../components/Spending";

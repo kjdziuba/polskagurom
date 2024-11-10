@@ -1,6 +1,5 @@
 // src/pages/SpendingWeb.js
 import React from "react";
-import { Chart, CategoryScale, LinearScale } from "chart.js";
 import {Spending, SpendingHistogram, DetailedSpending} from "../components/Spending";
 
 
