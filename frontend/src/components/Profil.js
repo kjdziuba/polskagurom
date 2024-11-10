@@ -31,7 +31,7 @@ function Profil() {
   return (
     <Paper elevation={3} sx={{ p: 4 }}>
       <Typography variant="h5" gutterBottom>
-        Enter something:
+        What are your investment goals?:
       </Typography>
       <TextField
         label="Enter text"
@@ -42,7 +42,7 @@ function Profil() {
         sx={{ mb: 2 }}
       />
       <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Save Input
+        Save
       </Button>
       {responseMessage && (
         <Typography variant="body1" color="textSecondary" sx={{ mt: 2 }}>
@@ -70,7 +70,7 @@ function InvestmentGoalsTable() {
     return (
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h5" gutterBottom>
-          User Input Data
+          Your investment goals:
         </Typography>
         <TableContainer component={Paper}>
           <Table>
