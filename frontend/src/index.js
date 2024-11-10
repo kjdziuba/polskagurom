@@ -4,6 +4,9 @@ import App from "./App";
 import { Auth0Provider } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/style.css";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
+import "@fontsource/roboto"; // Import Roboto font
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -16,8 +19,10 @@ root.render(
       redirect_uri: window.location.origin,
     }}
   >
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </ThemeProvider>
   </Auth0Provider>
 );
