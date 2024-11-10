@@ -170,6 +170,8 @@ const NetWorth = () => {
   );
 };
 
+
+
 // FIX LATER : This function is not working properly - negative values also add to the Pie
 function PlotCurrentInvestments(){
   const [investmentData, setInvestmentData] = useState(null);
@@ -186,22 +188,28 @@ function PlotCurrentInvestments(){
       });
   }, []);
   if (!investmentData) return <div>Loading...</div>;
+  console.log("investmentData", investmentData);
 
-  const data = {
-    labels: investmentData.categories,
-    datasets: [
-      {
-        data: investmentData.amounts,
-        backgroundColor: COLOR_PALETTE,
-      },
-    ],
-  };
-  console.log(data);
   return (
     <div>
-      <h2>Current Investments</h2>
-      <Pie data={data} />
-    </div>
+          <h2>Current Investments</h2>
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>Stock</th>
+                <th>Profit</th>
+              </tr>
+            </thead>
+            <tbody>
+                  {investmentData.categories.map((category, index) => (
+                    <tr key={index}>
+                      <td>{category}</td>
+                      <td>{investmentData.amounts[index]}</td>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        </div>
   );
 }
 
