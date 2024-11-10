@@ -1,14 +1,29 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
+import yfinance as yf
 
 ACCOUNT_FILES = {
     'Cash': ['data/bank_acc/bank_acc_1.xlsx', 'data/bank_acc/bank_acc_2.xlsx'],
     'Savings': ['data/bank_acc/savings_acc_1.xlsx', 'data/bank_acc/savings_acc_2.xlsx'],
 }
 
+TICKERS = {    
+    'Apple': ['AAPL'],
+    'Amazon': ['AMZN'],
+    'AMD': ['AMD'],
+    'Coca-Cola': ['KO'],
+    'Bank of America': ['BAC'],  
+    }
+
 INVESTMENT_FILES = ['data/bank_acc/stock.xlsx']
+
+
+def get_historical_stock_price(ticker, start_date, end_date):
+    stock = yf.Ticker(ticker)
+    stock_data = stock.history(start=start_date, end=end_date)
+    return stock_data
 
 # Function to read in bank account data
 def read_bank_acc(bank_acc_file):
@@ -17,7 +32,7 @@ def read_bank_acc(bank_acc_file):
     bank_acc.columns = ['Date', 'Title', 'Type', 'Amount', 'Balance']
     bank_acc['Date'] = pd.to_datetime(bank_acc['Date'], format='%Y-%m-%d')
     # Sort by date
-    bank_acc = bank_acc.sort_values(by='Date')
+    bank_acc = bank_acc.sort_values(by='Date', ignore_index = True)
     # Filter out 'future' data
     bank_acc = bank_acc[bank_acc['Date']<datetime.today().strftime('%Y-%m-%d')]
     return bank_acc
@@ -28,7 +43,7 @@ def read_savings_acc(savings_acc_file):
     savings_acc.columns = ['Date', 'Transfer In', 'Added interest', 'Balance']
     savings_acc['Date'] = pd.to_datetime(savings_acc['Date'], format='%Y-%m-%d')
     # Sort by date
-    savings_acc = savings_acc.sort_values(by='Date')
+    savings_acc = savings_acc.sort_values(by='Date', ignore_index = True)
     # Filter out 'future' data
     savings_acc = savings_acc[savings_acc['Date']<datetime.today().strftime('%Y-%m-%d')]
     return savings_acc
@@ -36,10 +51,10 @@ def read_savings_acc(savings_acc_file):
 def read_investment(investment_file):
     # Read in Excel file
     investment = pd.read_excel(investment_file)
-    investment.columns = ['Date', 'Name', 'Quantity', 'Price']
+    investment.columns = ['Date', 'Name', 'Quantity', 'Price', 'Cash_before', 'Cash_after']
     investment['Date'] = pd.to_datetime(investment['Date'], format='%Y-%m-%d')
     # Sort by date
-    investment = investment.sort_values(by='Date')
+    investment = investment.sort_values(by='Date', ignore_index = True)
     # Filter out 'future' data
     investment = investment[investment['Date']<datetime.today().strftime('%Y-%m-%d')]
     return investment
@@ -72,16 +87,32 @@ def create_stocks_df(investment, start_date='2024-01-01', end_date=datetime.toda
 
     # Iterate over each stock and populate quantities
     for name in stock_names:
+        
+        ticker = TICKERS[name][0]
+        price_assign = 0
         for date in dates:
+            #print(date)
+            #print(date+timedelta(days=1))
             # Calculate total quantity for the stock up to the current date
             stock_quantity = investment[(investment['Date'] <= date) & (investment['Name'] == name)]['Quantity'].sum()
             
             # Assign the quantity to the quantities DataFrame
             stock_quantities.loc[stock_quantities['Date']==date, name] = stock_quantity
+            if(price_assign == 0):
+                price = get_historical_stock_price(ticker, date-timedelta(days=3), date-timedelta(days=2))
+                #print(price) 
+                price_assign = price.iloc[0]['Close']
+            else:
             
-            # Stock price is fixed as 1.0 for now (replace with actual logic if available)
-            stock_prices.loc[stock_prices['Date']==date, name] = 1.0
-
+                price = get_historical_stock_price(ticker, date, date+timedelta(days=1))
+            
+                if not price.empty:
+                    price_assign = price.iloc[0]['Close']
+            
+            
+            #print(price)    
+            stock_prices.loc[stock_prices['Date']==date, name] = price_assign
+            #print(get_historical_stock_price(ticker, date, date+timedelta(days=1)).loc[0, 'Close'])
     # Combine quantities and prices into a single DataFrame if necessary
     # Here, we use MultiIndex columns to represent both quantity and price
     stock_df = pd.concat({'Quantity': stock_quantities, 'Price': stock_prices}, axis=1)
@@ -101,9 +132,39 @@ def add_investment(net_worth, stock_df):
         index = stock_df.index[stock_df[('Quantity', 'Date')]==date][0]
         for name in stock_names:
             total_stocks += stock_df.loc[index, ('Quantity', name)] * stock_df.loc[index, ('Price', name)]
+            
         net_worth.loc[net_worth['Date']==date, ['Net Worth', 'Investments']] += total_stocks
         
     return net_worth
+
+def add_cash_investment(net_worth, investment):
+    
+    investment = investment.sort_values(by='Date', ignore_index = True)
+    
+    dates = investment['Date'].unique()
+    #print(dates)
+    i = 0
+    for date in net_worth['Date']:
+        
+        balance_assign = 0.0
+        index = net_worth.index[net_worth['Date']==date][0]
+        if(date<dates[i]):  
+            
+            balance_assign = investment.loc[i, 'Cash_before']
+        elif(date==dates[i]):
+            balance_assign = investment.loc[i, 'Cash_after']
+            if(i<len(dates)-1):
+                i = i + 1 
+        else:
+            balance_assign = investment.loc[i,'Cash_after']
+        
+                
+        net_worth.loc[index, ['Cash', 'Net Worth']] += balance_assign
+    
+    return net_worth
+    
+
+
 
 
 def save_net_worth(net_worth, filename='data/net_worth.json'):
@@ -127,8 +188,8 @@ for acc_type in ACCOUNTS:
         net_worth = add_account(net_worth, account, acc_type)
 
 net_worth = add_investment(net_worth, stock)
-
-print(net_worth.tail(50))
+net_worth = add_cash_investment(net_worth, investment)
+#print(net_worth.tail(50))
 
 # Save net worth data
-save_net_worth(net_worth)
+#save_net_worth(net_worth)
