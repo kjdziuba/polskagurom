@@ -41,7 +41,7 @@ function FutureMe() {
         rows="3"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Ask Future Me a question..."
+        placeholder="Ask Future Me a question...3"
       ></textarea>
       <button className="btn btn-primary mt-2" onClick={handleSend}>
         Send
