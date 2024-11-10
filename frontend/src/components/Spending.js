@@ -160,11 +160,6 @@ const filterByYearMonth = (yearMonth) => {
 };
 
 const filteredSpendingData = filterByYearMonth(selectedMonth);
-console.log('filteredSpendingData:', filteredSpendingData); // Debugging log
-
-
-
-console.log('Spending data:', spendingData); // Debugging log
 
 return (
   <div>
@@ -179,8 +174,8 @@ return (
           </select>
           {selectedMonth && (
       <div>
-        <h3>Spending Data for {selectedMonth}</h3>
-        <table>
+        <h3>Detailed Spending Data for {selectedMonth}</h3>
+        <table className="styled-table">
           <thead>
             <tr>
               <th>Date</th>
