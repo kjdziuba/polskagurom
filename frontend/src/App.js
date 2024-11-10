@@ -11,6 +11,7 @@ import NetWorthWeb from "./pages/NetWorthWeb";
 import FutureMeWeb from "./pages/FutureMeWeb";
 import HomeWeb from "./pages/HomeWeb";
 import { useAuth0 } from "@auth0/auth0-react";
+import HeroImage from "./assets/hero_image.jpeg";
 
 Chart.register(CategoryScale, LinearScale);
 
@@ -24,6 +25,24 @@ function App() {
   return (
     <Router>
       <NavigationBar />
+      <div
+        className="hero-section"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${HeroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          height: "200px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: "2rem",
+        }}
+      >
+        <div className="text-center text-white">
+          <h1 className="display-3 mb-4">Timewise Finance</h1>
+          <p className="lead">Take control of your financial future</p>
+        </div>
+      </div>
       {!isAuthenticated ? (
         <div className="container text-center">
           <h2>Please log in to access the dashboard.</h2>
