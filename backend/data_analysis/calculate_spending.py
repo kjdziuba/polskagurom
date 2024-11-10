@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import datetime as dt
+#import nlp_categorize as nlp
 import data_analysis.nlp_categorize as nlp
 
 ACCOUNT_FILES = ['data/bank_acc/bank_acc_1.xlsx', 'data/bank_acc/bank_acc_2.xlsx']
@@ -51,6 +52,9 @@ def get_spending_from_last_x_days(spending, x):
 def get_last_month_spending(spending):
     return get_spending_from_last_x_days(spending, 30)
 
+def get_specific_month_spending(spending, month):
+    return spending[spending['Date'].dt.month == month]
+
 def get_spending_by_category(spending, month=None):
     # Filter by month, group by category, return dataframe
     if month:
@@ -66,4 +70,4 @@ def get_categories_amounts(spending, month=None):
 
 # Create DataFrame for spending
 #data = create_spending_df()
-#print(get_categories_amounts(data, 1))
+#print(get_specific_month_spending(data, 1).to_dict())

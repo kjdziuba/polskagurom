@@ -3,6 +3,7 @@ from data_analysis.calculate_spending import *
 
 spending_bp = Blueprint('spending_bp', __name__, url_prefix='/api/spending')
 spending_extended_bp = Blueprint('spending_extended_bp', __name__, url_prefix='/api/spending_extended')
+specific_spending_bp = Blueprint('specific_spending_bp', __name__, url_prefix='/api/specific_spending')
 
 @spending_bp.route('/', methods=['GET'])
 def get_spending():
@@ -36,3 +37,15 @@ def get_spending_history():
             'amount': amounts
         })
     return jsonify(spending_history)
+
+@specific_spending_bp.route('/', methods=['GET'])
+def get_specific_spending():
+    specific_data = create_spending_df()
+    specific_data['Date'] = specific_data['Date'].apply(lambda x: x.strftime('%Y-%m-%d'))
+    spending_history = {
+        'date': specific_data['Date'].tolist(),
+        'title': specific_data['Title'].tolist(),
+        'category': specific_data['Category'].tolist(),
+        'amount': specific_data['Amount'].tolist()
+    }
+    return jsonify([spending_history])
