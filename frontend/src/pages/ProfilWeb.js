@@ -1,5 +1,5 @@
 import React from "react";
-import Profil from "../components/Profil";
+import { Profil, InvestmentGoalsTable } from "../components/Profil";
 
 function ProfilWeb() {
   return (
@@ -7,8 +7,11 @@ function ProfilWeb() {
       <h1 className="text-center my-4">Profil</h1>
       <div className="row">
         <div className="col-md-6">
-          <Profil />
+          <InvestmentGoalsTable/>
         </div>
+        <div className="col-md-6">
+          <Profil />
+          </div>
       </div>
     </div>
   );

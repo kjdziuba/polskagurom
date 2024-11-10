@@ -7,6 +7,8 @@ from routes.news import news_bp
 from routes.notifications import notifications_bp
 from routes.spending import spending_extended_bp
 from routes.spending import specific_spending_bp
+from routes.general import save_input_bp
+from routes.general import output_bp
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -30,6 +32,8 @@ app.register_blueprint(notifications_bp)
 app.register_blueprint(spending_extended_bp)
 app.register_blueprint(specific_spending_bp)
 app.register_blueprint(net_worth_investment_bp)
+app.register_blueprint(save_input_bp)
+app.register_blueprint(output_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)
