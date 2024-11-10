@@ -7,9 +7,16 @@ spending_extended_bp = Blueprint('spending_extended_bp', __name__, url_prefix='/
 @spending_bp.route('/', methods=['GET'])
 def get_spending():
     # Mock data
+    #spending_data = {'categories': ['Rent', 'Food', 'Utilities', 'Entertainment'],'amounts': [800, 300, 150, 200]}
+
+    # Get spending data
+    data = get_last_month_spending(create_spending_df())
+    data = data.groupby('Category')['Amount'].sum()
+    categories = data.index.values.tolist()
+    amounts = data.values.tolist()
     spending_data = {
-        'categories': ['Rent', 'Food', 'Utilities', 'Entertainment'],
-        'amounts': [800, 300, 150, 200]
+        'categories': categories,
+        'amounts': amounts
     }
     return jsonify(spending_data)
 
@@ -28,5 +35,4 @@ def get_spending_history():
             'categories': categories,
             'amount': amounts
         })
-    print(spending_history)
     return jsonify(spending_history)

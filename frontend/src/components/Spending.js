@@ -28,6 +28,14 @@ const COLOR_PALETTE = [        '#75d856',
   '#98c76f',
   '#83aace',
   '#d8a1c5'];
+  function mapCategoriesToColors(categories) {
+    const categoryColorMap = {};
+    categories.forEach((category, index) => {
+      categoryColorMap[category] = COLOR_PALETTE[index];
+    });
+    return categoryColorMap;
+  }
+
 
 function Spending() {
   const [spendingData, setSpendingData] = useState(null);
@@ -79,14 +87,19 @@ function SpendingHistogram() {
 
   if (!spendingHistory) return <div>Loading...</div>;
 
-  const categories = spendingHistory[0].categories;
+  const allCategories = Array.from(new Set(spendingHistory.flatMap(entry => entry.categories)));
+  const categoryColorMap = mapCategoriesToColors(allCategories);
+
   const data = {
     labels: spendingHistory.map(entry => entry.date),
-    datasets: categories.map((category, index) => ({
+    datasets: allCategories.map((category) => ({
       label: category,
-      data: spendingHistory.map(entry => entry.amount[index]),
-      backgroundColor: COLOR_PALETTE [index],
-      borderColor: COLOR_PALETTE [index],
+      data: spendingHistory.map(entry => {
+        const categoryIndex = entry.categories.indexOf(category);
+        return categoryIndex !== -1 ? entry.amount[categoryIndex] : 0;
+      }),
+      backgroundColor: categoryColorMap[category],
+      borderColor: categoryColorMap[category],
       borderWidth: 1,
     })),
   };
