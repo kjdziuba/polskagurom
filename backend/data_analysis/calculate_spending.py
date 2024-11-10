@@ -4,7 +4,7 @@ import datetime as dt
 #import nlp_categorize as nlp
 import data_analysis.nlp_categorize as nlp
 
-ACCOUNT_FILES = ['data/bank_acc/bank_acc_1.xlsx', 'data/bank_acc/bank_acc_2.xlsx']
+ACCOUNT_FILES = ['data/normal/bank_acc/bank_acc_1.xlsx', 'data/normal/bank_acc/bank_acc_2.xlsx']
 
 def read_spending_data(bank_acc_file):
     # Read in Excel file
