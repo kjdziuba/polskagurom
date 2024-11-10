@@ -31,8 +31,6 @@ latest_data = stock_df[stock_df["('Quantity', 'Date')"] == latest_date]
 # Extract stock quantities
 stocks = [col.split(", ")[1].strip("()'") for col in stock_df.columns if col.startswith("('Quantity',") and col != "('Quantity', 'Date')"]
 
-print("Stocks:", stocks)
-
 holdings = stocks
 
 def fetch_news_articles(api_key, stock_symbols):
