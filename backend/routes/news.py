@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import pandas as pd
 import requests
+from datetime import datetime, timedelta
 
 news_bp = Blueprint('news_bp', __name__, url_prefix='/api/news')
 load_dotenv()
@@ -35,8 +36,22 @@ holdings = stocks
 
 def fetch_news_articles(api_key, stock_symbols):
     all_articles = []
+    # stock_symbols = {
+    #     'AAPL': 10,
+    #     'GOOGL': 5,
+    #     'AMZN': 2,
+    #     'AMD': 15,
+    #     'TSLA': 3,
+    #     'KO': 20,
+    #     'BAC': 25
+    # }
     for symbol in stock_symbols:
         url = f'https://newsapi.org/v2/everything?q={symbol}&apiKey={api_key}'
+        # Calculate the date 7 days ago
+        seven_days_ago = datetime.now() - timedelta(days=7)
+        seven_days_ago_str = seven_days_ago.strftime('%Y-%m-%d')
+
+        url = f'https://newsapi.org/v2/everything?q={symbol}&from={seven_days_ago_str}&apiKey={api_key}'
         response = requests.get(url)
         data = response.json()
         if data['status'] == 'ok':
